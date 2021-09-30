@@ -1,0 +1,15 @@
+dask
+decorator
+h5py
+Keras
+networkx
+numpy
+olefile
+Pillow
+PyYAML
+scikit-image
+scipy
+six
+Theano
+toolz
+tqdm
