@@ -29,9 +29,9 @@ def train():
 
     parser.add_argument('-m', '--model', type=str, default='', help=
             "The model to load. If none specified, a new model will be made instead.")
-    parser.add_argument('-b', '--batch-size', type=int, default=16, help=
+    parser.add_argument('-b', '--batch-size', type=int, default=4, help=
             "Batch size to use while training.")
-    parser.add_argument('-e', '--num-epochs', type=int, default=100, help=
+    parser.add_argument('-e', '--num-epochs', type=int, default=400, help=
             "The number of epochs to train.")
     parser.add_argument('-opt', '--optimizer', type=str, default='adam', help=
             "Optimizer to use, must be a valid optimizer included in Keras.")

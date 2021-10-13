@@ -197,6 +197,6 @@ def train_model(data_dir, output_dir, model_file='', batch_size=32,
 
     model.fit(inputs, outputs, batch_size=batch_size, epochs=num_epochs,
             callbacks=callbacks, shuffle=True, verbose=1)
-    model.save("/home/manfred/deconvfaces/output/saved_model.pb")
+    model.save("output/saved_model.pb")
     if verbose:
         print("Done!")

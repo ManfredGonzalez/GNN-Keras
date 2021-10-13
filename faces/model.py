@@ -7,7 +7,7 @@ Methods to build FaceGen models.
 
 from keras import backend as K
 from keras.layers import BatchNormalization, Convolution2D, Dense, LeakyReLU, \
-        Input, MaxPooling2D, merge, Reshape, UpSampling2D, concatenate,Conv2DTranspose
+        Input, MaxPooling2D, merge, Reshape, UpSampling2D, concatenate,Conv2DTranspose,Conv2D
 from keras.models import Model
 
 from .instance import Emotion, NUM_YALE_POSES
@@ -82,8 +82,8 @@ def build_model(identity_len=57, orientation_len=2, lighting_len=4,
         idx = i if i < len(num_kernels) else -1
         #x = LeakyReLU()( Convolution2D(num_kernels[idx], 5, 5, padding='same')(x) )
         #x = LeakyReLU()( Convolution2D(num_kernels[idx], 3, 3, padding='same')(x) )
-        x = LeakyReLU()( Conv2DTranspose(num_kernels[idx],(5, 5), padding='same')(x) )
-        x = LeakyReLU()( Conv2DTranspose(num_kernels[idx],(3, 3), padding='same')(x) )
+        x = LeakyReLU()( Conv2D(num_kernels[idx],(5, 5), padding='same')(x) )
+        x = LeakyReLU()( Conv2D(num_kernels[idx],(3, 3), padding='same')(x) )
         x = BatchNormalization()(x)
 
     # Last deconvolution layer: Create 3-channel image.
@@ -91,9 +91,9 @@ def build_model(identity_len=57, orientation_len=2, lighting_len=4,
     x = UpSampling2D((2,2))(x)
     #x = LeakyReLU()( Convolution2D(8, 5, 5, padding='same')(x) )
     #x = LeakyReLU()( Convolution2D(8, 3, 3, padding='same')(x) )
-    x = LeakyReLU()( Conv2DTranspose(8,(5, 5), padding='same')(x) )
-    x = LeakyReLU()( Conv2DTranspose(8,(3, 3), padding='same')(x) )
-    x = Conv2DTranspose(1 if use_yale or use_jaffe else 3,(3,3),
+    x = LeakyReLU()( Conv2D(8,(5, 5), padding='same')(x) )
+    x = LeakyReLU()( Conv2D(8,(3, 3), padding='same')(x) )
+    x = Conv2D(1 if use_yale or use_jaffe else 3,(3,3),
                       padding='same', activation='sigmoid')(x)
     '''x = Convolution2D(1 if use_yale or use_jaffe else 3, 3, 3,
                       padding='same', activation='sigmoid')(x)'''
