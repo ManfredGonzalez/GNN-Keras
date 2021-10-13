@@ -12,6 +12,8 @@ from keras.models import Model
 
 from .instance import Emotion, NUM_YALE_POSES
 
+import numpy as np
+
 
 def build_model(identity_len=57, orientation_len=2, lighting_len=4,
                 emotion_len=Emotion.length(), pose_len=NUM_YALE_POSES,
@@ -55,7 +57,12 @@ def build_model(identity_len=57, orientation_len=2, lighting_len=4,
     fc2 = LeakyReLU()( Dense(512)(lighting_input if use_yale else orientation_input) )
     fc3 = LeakyReLU()( Dense(512)(pose_input if use_yale else emotion_input) )
 
-    params = concatenate([fc1, fc2, fc3])
+    sensitivity = 1
+    epsilon = 500
+    noise = K.constant(np.random.laplace(loc=0,scale=sensitivity/epsilon, size=(1, 512)))
+
+    obfuscated_layer = fc1 + noise
+    params = concatenate([obfuscated_layer, fc2, fc3])
     #params = merge([fc1, fc2, fc3], mode='concat')
     params = LeakyReLU()( Dense(1024)(params) )
 

@@ -176,9 +176,9 @@ def train_model(data_dir, output_dir, model_file='', batch_size=32,
             monitor='loss', verbose=0, save_best_only=True,
         )
     )
-    callbacks.append(
+    '''callbacks.append(
         EarlyStopping(monitor='loss', patience=8)
-    )
+    )'''
 
     # Load data and begin training
 
